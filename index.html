@@ -4,12 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chúc mừng sinh nhật Trúc Mai 🎉</title>
-    <!-- Google Fonts dễ thương -->
     <link
       href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap"
       rel="stylesheet"
     />
     <style>
+      * {
+        box-sizing: border-box;
+      }
       body {
         margin: 0;
         padding: 0;
@@ -22,7 +24,7 @@
 
       .cake {
         font-size: 4rem;
-        margin-top: 40px;
+        margin-top: 30px;
         animation: bounce 1.5s infinite;
       }
 
@@ -39,14 +41,17 @@
       h1 {
         font-family: "Pacifico", cursive;
         color: #ff69b4;
-        font-size: 2.4rem;
+        font-size: 1.8rem;
+        margin: 20px 15px 10px;
         opacity: 0;
         transition: opacity 1.5s ease-in-out;
       }
 
       p {
         font-size: 1.2rem;
+        margin: 10px 20px;
         opacity: 0;
+        white-space: pre-line;
         transition: opacity 1.5s ease-in-out;
       }
 
@@ -63,13 +68,32 @@
         border: 4px solid #fff;
         margin: 20px auto;
         box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        display: block;
+      }
+
+      button {
+        margin-top: 15px;
+        padding: 12px 24px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 30px;
+        background-color: #ff69b4;
+        color: white;
+        cursor: pointer;
+        font-family: "Quicksand", sans-serif;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #ff1493;
       }
 
       .heart {
         position: absolute;
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         color: red;
-        animation: float 5s linear infinite;
+        animation: float 6s linear infinite;
       }
 
       @keyframes float {
@@ -86,22 +110,13 @@
         }
       }
 
-      button {
-        margin-top: 20px;
-        padding: 12px 24px;
-        font-size: 1rem;
-        border: none;
-        border-radius: 30px;
-        background-color: #ff69b4;
-        color: white;
-        cursor: pointer;
-        font-family: "Quicksand", sans-serif;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        transition: background-color 0.3s;
-      }
-
-      button:hover {
-        background-color: #ff1493;
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 1.6rem;
+        }
+        p {
+          font-size: 1rem;
+        }
       }
     </style>
   </head>
@@ -114,18 +129,26 @@
     </h1>
 
     <!-- Ảnh Trúc Mai -->
-    <img src="./trucmai.jpg" alt="Trúc Mai" class="avatar" id="image" />
+    <img src="./trucmai.jpg" alt="Trúc Mai" class="avatar" />
 
     <!-- Nút xem lời chúc -->
-    <button id="showBtn">Xem lời chúc</button>
+    <button id="showBtn">💌 Xem lời chúc</button>
 
     <p id="wish">
       Chúc bạn luôn xinh đẹp, hạnh phúc và ngập tràn yêu thương 💕
     </p>
 
+    <!-- Nhạc nền -->
+    <audio autoplay loop>
+      <source
+        src="https://cdn.pixabay.com/download/audio/2023/03/30/audio_ae1a22c8f2.mp3?filename=hbd-to-u-144068.mp3"
+        type="audio/mpeg"
+      />
+      Trình duyệt không hỗ trợ phát nhạc.
+    </audio>
+
     <!-- Trái tim bay -->
     <script>
-      // Hiển thị intro sau 1 giây
       window.onload = function () {
         const intro = document.getElementById("intro");
         setTimeout(() => {
@@ -133,24 +156,22 @@
         }, 1000);
       };
 
-      // Hiển thị lời chúc khi bấm nút
       document.getElementById("showBtn").addEventListener("click", function () {
         document.getElementById("wish").classList.add("show");
-        this.style.display = "none"; // ẩn nút sau khi bấm
+        this.style.display = "none";
       });
 
-      // Trái tim bay
       function createHeart() {
         const heart = document.createElement("div");
         heart.classList.add("heart");
         heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+        heart.style.animationDuration = Math.random() * 2 + 4 + "s";
         heart.innerText = "❤️";
         document.body.appendChild(heart);
 
         setTimeout(() => {
           heart.remove();
-        }, 5000);
+        }, 6000);
       }
 
       setInterval(createHeart, 300);
