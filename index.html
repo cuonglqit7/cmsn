@@ -4,31 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chúc mừng sinh nhật Trúc Mai 🎉</title>
+    <!-- Google Fonts dễ thương -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <style>
       body {
         margin: 0;
         padding: 0;
         overflow: hidden;
         background: radial-gradient(circle, #ffe0f0, #ffd6ec, #ffc0e4);
-        font-family: "Segoe UI", sans-serif;
-        color: #fff;
+        font-family: "Quicksand", sans-serif;
+        color: #884ea0;
         text-align: center;
-      }
-
-      h1,
-      p {
-        opacity: 0;
-        transition: opacity 1.5s ease-in-out;
-      }
-
-      h1.show,
-      p.show {
-        opacity: 1;
       }
 
       .cake {
         font-size: 4rem;
-        margin-top: 60px;
+        margin-top: 40px;
         animation: bounce 1.5s infinite;
       }
 
@@ -42,13 +36,33 @@
         }
       }
 
-      @keyframes glow {
-        from {
-          text-shadow: 0 0 10px #fff;
-        }
-        to {
-          text-shadow: 0 0 20px #ff1493, 0 0 30px #ff69b4;
-        }
+      h1 {
+        font-family: "Pacifico", cursive;
+        color: #ff69b4;
+        font-size: 2.4rem;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+      }
+
+      p {
+        font-size: 1.2rem;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out;
+      }
+
+      h1.show,
+      p.show {
+        opacity: 1;
+      }
+
+      .avatar {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        margin: 20px auto;
+        box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
       }
 
       .heart {
@@ -71,42 +85,66 @@
           opacity: 0;
         }
       }
+
+      button {
+        margin-top: 20px;
+        padding: 12px 24px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 30px;
+        background-color: #ff69b4;
+        color: white;
+        cursor: pointer;
+        font-family: "Quicksand", sans-serif;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #ff1493;
+      }
     </style>
   </head>
   <body>
     <div class="cake">🎂</div>
 
-    <h1 id="intro">Vào một ngày đặc biệt, Trúc Mai đã được sinh ra...</h1>
+    <h1 id="intro">
+      Vào một ngày ngọt ngào như kẹo bông, thế giới đã may mắn có thêm một bông
+      hoa tên là Trúc Mai...
+    </h1>
+
+    <!-- Ảnh Trúc Mai -->
+    <img
+      src="https://i.imgur.com/your_image.jpg"
+      alt="Trúc Mai"
+      class="avatar"
+      id="image"
+    />
+
+    <!-- Nút xem lời chúc -->
+    <button id="showBtn">Xem lời chúc</button>
+
     <p id="wish">
       Chúc bạn luôn xinh đẹp, hạnh phúc và ngập tràn yêu thương 💕
     </p>
 
-    <!-- Nhạc nền -->
-    <audio autoplay loop>
-      <source
-        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-        type="audio/mpeg"
-      />
-      Trình duyệt không hỗ trợ nhạc nền.
-    </audio>
-
     <!-- Trái tim bay -->
     <script>
-      // Hiện từng dòng một cách mượt mà
+      // Hiển thị intro sau 1 giây
       window.onload = function () {
         const intro = document.getElementById("intro");
-        const wish = document.getElementById("wish");
-
         setTimeout(() => {
           intro.classList.add("show");
         }, 1000);
-
-        setTimeout(() => {
-          wish.classList.add("show");
-        }, 4000);
       };
 
-      // Tạo trái tim bay
+      // Hiển thị lời chúc khi bấm nút
+      document.getElementById("showBtn").addEventListener("click", function () {
+        document.getElementById("wish").classList.add("show");
+        this.style.display = "none"; // ẩn nút sau khi bấm
+      });
+
+      // Trái tim bay
       function createHeart() {
         const heart = document.createElement("div");
         heart.classList.add("heart");
