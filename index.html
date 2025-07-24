@@ -134,11 +134,19 @@
       }
 
       .message {
-        font-size: 1em;
-        color: #555;
-        padding: 0 15px;
-        max-width: 450px;
-        margin: 0 auto;
+        font-size: 1.2rem;
+        font-weight: 500;
+        white-space: pre-wrap;
+        border-right: 2px solid black;
+        display: inline-block;
+        animation: blink-caret 0.7s step-end infinite;
+        margin-top: 30px;
+      }
+
+      @keyframes blink-caret {
+        50% {
+          border-color: transparent;
+        }
       }
 
       @media (max-width: 480px) {
@@ -166,6 +174,20 @@
           font-size: 1.4em;
         }
       }
+      .blink {
+        animation: blink-animation 1s infinite;
+        color: #ff4081; /* màu tùy chọn */
+      }
+
+      @keyframes blink-animation {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
     </style>
   </head>
   <body>
@@ -186,13 +208,11 @@
 
     <!-- Nội dung -->
     <div class="container hidden" id="mainContent">
-      <h1>Chúc mừng<br />sinh nhật</h1>
+      <h1 class="blink">Chúc mừng<br />sinh nhật</h1>
+
       <img src="trucmai.jpg" alt="Ảnh Trúc Mai" class="avatar" />
       <div class="name-tag">Trúc Mai</div>
-      <p class="message">
-        Chúc mừng sinh nhật nhé người bạn thân yêu của tớ! Mong rằng hôm nay sẽ
-        tràn ngập niềm vui và mọi ước mơ của cậu đều trở thành hiện thực.
-      </p>
+      <p class="message" id="typing-text"></p>
     </div>
 
     <script>
@@ -200,8 +220,23 @@
         document.getElementById("startScreen").classList.add("hidden");
         document.getElementById("mainContent").classList.remove("hidden");
         document.getElementById("balloons").classList.remove("hidden");
-        document.getElementById("gifts").classList.remove("hidden");
       }
+    </script>
+    <script>
+      const text =
+        "Chúc mừng sinh nhật nhé người bạn thân yêu của tớ! Mong rằng hôm nay sẽ tràn ngập niềm vui và mọi ước mơ của cậu đều trở thành hiện thực.";
+      const typingElement = document.getElementById("typing-text");
+      let charIndex = 0;
+
+      function typeChar() {
+        if (charIndex < text.length) {
+          typingElement.innerHTML += text.charAt(charIndex);
+          charIndex++;
+          setTimeout(typeChar, 50); // tốc độ gõ (ms)
+        }
+      }
+
+      typeChar(); // Bắt đầu typing khi trang được load
     </script>
   </body>
 </html>
