@@ -11,123 +11,157 @@
     <style>
       body {
         margin: 0;
-        padding: 0;
-        background-color: #ffe6f0;
         font-family: "Quicksand", sans-serif;
+        background-color: #ffe6f0;
         overflow: hidden;
       }
 
-      .countdown,
-      .intro,
-      .main {
-        position: absolute;
-        width: 100%;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        background-color: #ffe6f0;
-        z-index: 1;
+      .countdown {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20vw;
+        font-weight: bold;
+        color: #ff69b4;
+        z-index: 1000;
+        animation: pop 0.5s ease;
       }
 
-      .countdown span {
-        font-size: 15rem;
-        font-family: "Pacifico", cursive;
-        color: #ff4d88;
-        animation: scalePop 1s ease-out forwards;
-      }
-
-      @keyframes scalePop {
+      @keyframes pop {
         0% {
-          transform: scale(0);
+          transform: scale(0.5) translate(-50%, -50%);
           opacity: 0;
         }
         100% {
-          transform: scale(1);
+          transform: scale(1) translate(-50%, -50%);
           opacity: 1;
         }
       }
 
-      .intro-text span {
-        font-size: 2rem;
-        margin: 0.5rem;
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.6s ease-in-out;
-      }
-
-      .intro-text span.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .main {
-        display: none;
-        text-align: center;
-        padding: 2rem;
-      }
-
-      .main h1 {
-        font-size: 3rem;
-        color: #ff3399;
-      }
-
-      .main p {
-        font-size: 1.5rem;
-        color: #663366;
-      }
-
-      .hearts {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
-        pointer-events: none;
-        z-index: 0;
-      }
-
       .heart {
         position: absolute;
-        width: 100px;
-        height: 100px;
-        background-color: #ff66a3;
+        width: 30vw;
+        height: 30vw;
+        background-color: pink;
         transform: rotate(45deg);
-        animation: floatHeart 4s infinite ease-in;
+        animation: float 4s ease-in-out infinite;
+        opacity: 0.7;
+        border-radius: 50%;
+        z-index: 500;
       }
 
       .heart::before,
       .heart::after {
         content: "";
         position: absolute;
-        width: 100px;
-        height: 100px;
-        background-color: #ff66a3;
+        width: 30vw;
+        height: 30vw;
+        background-color: pink;
         border-radius: 50%;
       }
 
       .heart::before {
-        top: -50px;
+        top: -50%;
         left: 0;
       }
+
       .heart::after {
+        left: -50%;
         top: 0;
-        left: -50px;
       }
 
-      @keyframes floatHeart {
+      @keyframes float {
         0% {
-          transform: translateY(100vh) scale(1);
+          transform: translateY(0) rotate(45deg);
+          opacity: 0.7;
+        }
+        50% {
+          transform: translateY(-20vh) rotate(45deg);
           opacity: 1;
         }
         100% {
-          transform: translateY(-100vh) scale(0.5);
+          transform: translateY(0) rotate(45deg);
+          opacity: 0.7;
+        }
+      }
+
+      .intro {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 100dvh;
+        padding: 0 20px;
+        font-size: 6vw;
+        color: #ff1493;
+        animation: fadeIn 2s ease forwards;
+      }
+
+      .intro span {
+        opacity: 0;
+        display: block;
+        animation: fadeText 1s ease forwards;
+      }
+
+      @keyframes fadeText {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
           opacity: 0;
         }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .fireworks {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        animation: flicker 2s infinite;
+        z-index: 900;
+      }
+
+      @keyframes flicker {
+        0%,
+        100% {
+          opacity: 0.8;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+
+      .photo {
+        position: fixed;
+        bottom: 10vh;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 800;
+        width: 50vw;
+        max-width: 250px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        display: none;
       }
 
       audio {
@@ -136,97 +170,61 @@
     </style>
   </head>
   <body>
-    <div class="countdown">
-      <span id="number">3</span>
+    <div class="countdown" id="countdown"></div>
+    <div class="intro" id="intro">
+      <span style="animation-delay: 0.5s">Chúc mừng sinh nhật</span>
+      <span style="animation-delay: 1.5s">Trúc Mai dễ thương nhất quả đất</span>
+      <span style="animation-delay: 2.5s"
+        >Chúc bạn luôn vui vẻ và hạnh phúc 💖</span
+      >
     </div>
-
-    <div class="intro" style="display: none">
-      <div class="intro-text" id="intro-text">
-        <span>Chúc</span>
-        <span>mừng</span>
-        <span>sinh</span>
-        <span>nhật</span>
-        <span>Trúc</span>
-        <span>Mai</span>
-        <span>🎉🎂💖</span>
-      </div>
-    </div>
-
-    <div class="main">
-      <h1>🎈 Mãi là cô gái rực rỡ nhé! 💐</h1>
-      <p>Chúc Mai luôn xinh đẹp, hạnh phúc và thành công trong cuộc sống! 🥰</p>
-      <img
-        src="./trucmai.jpg"
-        alt="Trúc Mai"
-        width="300"
-        style="border-radius: 20px; margin-top: 1rem"
-      />
-    </div>
-
-    <div class="hearts"></div>
-
+    <img src="truc-mai.jpg" class="photo" id="photo" alt="Trúc Mai xinh đẹp" />
+    <div class="fireworks"></div>
     <audio autoplay loop>
-      <source
-        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-        type="audio/mp3"
-      />
+      <source src="happy-birthday.mp3" type="audio/mpeg" />
     </audio>
 
     <script>
-      const countdownEl = document.querySelector(".countdown");
-      const introEl = document.querySelector(".intro");
-      const mainEl = document.querySelector(".main");
-      const numberEl = document.getElementById("number");
+      const countdownEl = document.getElementById("countdown");
+      const introEl = document.getElementById("intro");
+      const photoEl = document.getElementById("photo");
 
       let count = 3;
-
-      function runCountdown() {
-        if (count === 0) {
+      const countdownInterval = setInterval(() => {
+        countdownEl.textContent = count;
+        createHeart();
+        count--;
+        if (count < 0) {
+          clearInterval(countdownInterval);
           countdownEl.style.display = "none";
           introEl.style.display = "flex";
           showIntro();
-          return;
         }
-        numberEl.textContent = count;
-        numberEl.style.animation = "scalePop 1s ease-out";
-        count--;
-        setTimeout(runCountdown, 1000);
+      }, 1000);
+
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.top = `${Math.random() * 100}vh`;
+        heart.style.left = `${Math.random() * 100}vw`;
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
       }
 
       function showIntro() {
-        const spans = document.querySelectorAll(".intro-text span");
-        spans.forEach((span, i) => {
+        const spans = introEl.querySelectorAll("span");
+        spans.forEach((span, index) => {
           setTimeout(() => {
-            span.classList.add("visible");
-            if (i === spans.length - 1) {
+            span.style.opacity = 1;
+            span.style.animationDelay = `${index + 1}s`;
+            if (index === spans.length - 1) {
               setTimeout(() => {
-                introEl.style.display = "none";
-                mainEl.style.display = "flex";
-              }, 2000);
+                photoEl.style.display = "block";
+              }, 1500);
             }
-          }, i * 500);
+          }, index * 1000);
         });
       }
-
-      function createHearts() {
-        const heartsContainer = document.querySelector(".hearts");
-        setInterval(() => {
-          const heart = document.createElement("div");
-          heart.classList.add("heart");
-          heart.style.left = Math.random() * 100 + "vw";
-          heart.style.animationDuration = 3 + Math.random() * 2 + "s";
-          heartsContainer.appendChild(heart);
-
-          setTimeout(() => {
-            heart.remove();
-          }, 5000);
-        }, 300);
-      }
-
-      window.onload = () => {
-        runCountdown();
-        createHearts();
-      };
     </script>
   </body>
 </html>
