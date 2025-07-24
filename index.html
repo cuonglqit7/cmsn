@@ -38,21 +38,10 @@
         }
       }
 
-      h1 {
-        font-family: "Pacifico", cursive;
-        color: #ff69b4;
-        font-size: 1.8rem;
-        margin: 20px 15px 10px;
-        opacity: 0;
-        transition: opacity 1.5s ease-in-out;
-      }
-
+      h1,
       p {
-        font-size: 1.2rem;
-        margin: 10px 20px;
         opacity: 0;
-        white-space: pre-line;
-        transition: opacity 1.5s ease-in-out;
+        transition: opacity 1.2s ease-in-out;
       }
 
       h1.show,
@@ -69,24 +58,20 @@
         margin: 20px auto;
         box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
         display: block;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
       }
 
-      button {
-        margin-top: 15px;
-        padding: 12px 24px;
-        font-size: 1rem;
-        border: none;
-        border-radius: 30px;
-        background-color: #ff69b4;
-        color: white;
-        cursor: pointer;
-        font-family: "Quicksand", sans-serif;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        transition: background-color 0.3s;
+      .avatar.show {
+        opacity: 1;
       }
 
-      button:hover {
-        background-color: #ff1493;
+      #countdown {
+        font-size: 3rem;
+        color: #ff1493;
+        margin-top: 40px;
+        font-weight: bold;
+        transition: opacity 0.5s;
       }
 
       .heart {
@@ -98,24 +83,27 @@
 
       @keyframes float {
         0% {
-          transform: translateY(100vh) scale(0.5);
+          transform: translateY(-10vh) scale(0.5);
           opacity: 0;
         }
         50% {
           opacity: 1;
         }
         100% {
-          transform: translateY(-10vh) scale(1.2);
+          transform: translateY(100vh) scale(1.2);
           opacity: 0;
         }
       }
 
       @media (max-width: 480px) {
         h1 {
-          font-size: 1.6rem;
+          font-size: 1.5rem;
         }
         p {
           font-size: 1rem;
+        }
+        #countdown {
+          font-size: 2rem;
         }
       }
     </style>
@@ -123,17 +111,19 @@
   <body>
     <div class="cake">🎂</div>
 
+    <!-- Đếm ngược 3 2 1 -->
+    <div id="countdown">3️⃣</div>
+
+    <!-- Lời giới thiệu -->
     <h1 id="intro">
       Vào một ngày ngọt ngào như kẹo bông, thế giới đã may mắn có thêm một bông
       hoa tên là Trúc Mai...
     </h1>
 
-    <!-- Ảnh Trúc Mai -->
-    <img src="./trucmai.jpg" alt="Trúc Mai" class="avatar" />
+    <!-- Ảnh -->
+    <img src="./trucmai.jpg" alt="Trúc Mai" class="avatar" id="avatar" />
 
-    <!-- Nút xem lời chúc -->
-    <button id="showBtn">💌 Xem lời chúc</button>
-
+    <!-- Lời chúc -->
     <p id="wish">
       Chúc bạn luôn xinh đẹp, hạnh phúc và ngập tràn yêu thương 💕
     </p>
@@ -147,20 +137,34 @@
       Trình duyệt không hỗ trợ phát nhạc.
     </audio>
 
-    <!-- Trái tim bay -->
+    <!-- Script -->
     <script>
       window.onload = function () {
+        const countdown = document.getElementById("countdown");
         const intro = document.getElementById("intro");
-        setTimeout(() => {
-          intro.classList.add("show");
+        const wish = document.getElementById("wish");
+        const avatar = document.getElementById("avatar");
+
+        let count = 3;
+        countdown.innerText = `${count}️⃣`;
+
+        const interval = setInterval(() => {
+          count--;
+          if (count > 0) {
+            countdown.innerText = `${count}️⃣`;
+          } else {
+            clearInterval(interval);
+            countdown.style.display = "none";
+
+            // Hiện intro, ảnh, và lời chúc
+            intro.classList.add("show");
+            avatar.classList.add("show");
+            wish.classList.add("show");
+          }
         }, 1000);
       };
 
-      document.getElementById("showBtn").addEventListener("click", function () {
-        document.getElementById("wish").classList.add("show");
-        this.style.display = "none";
-      });
-
+      // Trái tim bay từ trên xuống
       function createHeart() {
         const heart = document.createElement("div");
         heart.classList.add("heart");
