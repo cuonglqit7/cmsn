@@ -9,176 +9,224 @@
       rel="stylesheet"
     />
     <style>
-      * {
-        box-sizing: border-box;
-      }
       body {
         margin: 0;
         padding: 0;
-        overflow: hidden;
-        background: radial-gradient(circle, #ffe0f0, #ffd6ec, #ffc0e4);
+        background-color: #ffe6f0;
         font-family: "Quicksand", sans-serif;
-        color: #884ea0;
-        text-align: center;
+        overflow: hidden;
       }
 
-      .cake {
-        font-size: 4rem;
-        margin-top: 30px;
-        animation: bounce 1.5s infinite;
+      .countdown,
+      .intro,
+      .main {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: #ffe6f0;
+        z-index: 1;
       }
 
-      @keyframes bounce {
-        0%,
+      .countdown span {
+        font-size: 15rem;
+        font-family: "Pacifico", cursive;
+        color: #ff4d88;
+        animation: scalePop 1s ease-out forwards;
+      }
+
+      @keyframes scalePop {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
         100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-20px);
+          transform: scale(1);
+          opacity: 1;
         }
       }
 
-      h1,
-      p {
+      .intro-text span {
+        font-size: 2rem;
+        margin: 0.5rem;
         opacity: 0;
-        transition: opacity 1.2s ease-in-out;
+        transform: translateY(30px);
+        transition: all 0.6s ease-in-out;
       }
 
-      h1.show,
-      p.show {
+      .intro-text span.visible {
         opacity: 1;
+        transform: translateY(0);
       }
 
-      .avatar {
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 4px solid #fff;
-        margin: 20px auto;
-        box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
-        display: block;
-        opacity: 0;
-        transition: opacity 1s ease-in-out;
+      .main {
+        display: none;
+        text-align: center;
+        padding: 2rem;
       }
 
-      .avatar.show {
-        opacity: 1;
-      }
-
-      #countdown {
+      .main h1 {
         font-size: 3rem;
-        color: #ff1493;
-        margin-top: 40px;
-        font-weight: bold;
-        transition: opacity 0.5s;
+        color: #ff3399;
+      }
+
+      .main p {
+        font-size: 1.5rem;
+        color: #663366;
+      }
+
+      .hearts {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
       }
 
       .heart {
         position: absolute;
-        font-size: 1.4rem;
-        color: red;
-        animation: float 6s linear infinite;
+        width: 100px;
+        height: 100px;
+        background-color: #ff66a3;
+        transform: rotate(45deg);
+        animation: floatHeart 4s infinite ease-in;
       }
 
-      @keyframes float {
+      .heart::before,
+      .heart::after {
+        content: "";
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background-color: #ff66a3;
+        border-radius: 50%;
+      }
+
+      .heart::before {
+        top: -50px;
+        left: 0;
+      }
+      .heart::after {
+        top: 0;
+        left: -50px;
+      }
+
+      @keyframes floatHeart {
         0% {
-          transform: translateY(-10vh) scale(0.5);
-          opacity: 0;
-        }
-        50% {
+          transform: translateY(100vh) scale(1);
           opacity: 1;
         }
         100% {
-          transform: translateY(100vh) scale(1.2);
+          transform: translateY(-100vh) scale(0.5);
           opacity: 0;
         }
       }
 
-      @media (max-width: 480px) {
-        h1 {
-          font-size: 1.5rem;
-        }
-        p {
-          font-size: 1rem;
-        }
-        #countdown {
-          font-size: 2rem;
-        }
+      audio {
+        display: none;
       }
     </style>
   </head>
   <body>
-    <div class="cake">🎂</div>
+    <div class="countdown">
+      <span id="number">3</span>
+    </div>
 
-    <!-- Đếm ngược 3 2 1 -->
-    <div id="countdown">3️⃣</div>
+    <div class="intro" style="display: none">
+      <div class="intro-text" id="intro-text">
+        <span>Chúc</span>
+        <span>mừng</span>
+        <span>sinh</span>
+        <span>nhật</span>
+        <span>Trúc</span>
+        <span>Mai</span>
+        <span>🎉🎂💖</span>
+      </div>
+    </div>
 
-    <!-- Lời giới thiệu -->
-    <h1 id="intro">
-      Vào một ngày ngọt ngào như kẹo bông, thế giới đã may mắn có thêm một bông
-      hoa tên là Trúc Mai...
-    </h1>
+    <div class="main">
+      <h1>🎈 Mãi là cô gái rực rỡ nhé! 💐</h1>
+      <p>Chúc Mai luôn xinh đẹp, hạnh phúc và thành công trong cuộc sống! 🥰</p>
+      <img
+        src="./trucmai.jpg"
+        alt="Trúc Mai"
+        width="300"
+        style="border-radius: 20px; margin-top: 1rem"
+      />
+    </div>
 
-    <!-- Ảnh -->
-    <img src="./trucmai.jpg" alt="Trúc Mai" class="avatar" id="avatar" />
+    <div class="hearts"></div>
 
-    <!-- Lời chúc -->
-    <p id="wish">
-      Chúc bạn luôn xinh đẹp, hạnh phúc và ngập tràn yêu thương 💕
-    </p>
-
-    <!-- Nhạc nền -->
     <audio autoplay loop>
       <source
-        src="https://cdn.pixabay.com/download/audio/2023/03/30/audio_ae1a22c8f2.mp3?filename=hbd-to-u-144068.mp3"
-        type="audio/mpeg"
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        type="audio/mp3"
       />
-      Trình duyệt không hỗ trợ phát nhạc.
     </audio>
 
-    <!-- Script -->
     <script>
-      window.onload = function () {
-        const countdown = document.getElementById("countdown");
-        const intro = document.getElementById("intro");
-        const wish = document.getElementById("wish");
-        const avatar = document.getElementById("avatar");
+      const countdownEl = document.querySelector(".countdown");
+      const introEl = document.querySelector(".intro");
+      const mainEl = document.querySelector(".main");
+      const numberEl = document.getElementById("number");
 
-        let count = 3;
-        countdown.innerText = `${count}️⃣`;
+      let count = 3;
 
-        const interval = setInterval(() => {
-          count--;
-          if (count > 0) {
-            countdown.innerText = `${count}️⃣`;
-          } else {
-            clearInterval(interval);
-            countdown.style.display = "none";
-
-            // Hiện intro, ảnh, và lời chúc
-            intro.classList.add("show");
-            avatar.classList.add("show");
-            wish.classList.add("show");
-          }
-        }, 1000);
-      };
-
-      // Trái tim bay từ trên xuống
-      function createHeart() {
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = Math.random() * 2 + 4 + "s";
-        heart.innerText = "❤️";
-        document.body.appendChild(heart);
-
-        setTimeout(() => {
-          heart.remove();
-        }, 6000);
+      function runCountdown() {
+        if (count === 0) {
+          countdownEl.style.display = "none";
+          introEl.style.display = "flex";
+          showIntro();
+          return;
+        }
+        numberEl.textContent = count;
+        numberEl.style.animation = "scalePop 1s ease-out";
+        count--;
+        setTimeout(runCountdown, 1000);
       }
 
-      setInterval(createHeart, 300);
+      function showIntro() {
+        const spans = document.querySelectorAll(".intro-text span");
+        spans.forEach((span, i) => {
+          setTimeout(() => {
+            span.classList.add("visible");
+            if (i === spans.length - 1) {
+              setTimeout(() => {
+                introEl.style.display = "none";
+                mainEl.style.display = "flex";
+              }, 2000);
+            }
+          }, i * 500);
+        });
+      }
+
+      function createHearts() {
+        const heartsContainer = document.querySelector(".hearts");
+        setInterval(() => {
+          const heart = document.createElement("div");
+          heart.classList.add("heart");
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.animationDuration = 3 + Math.random() * 2 + "s";
+          heartsContainer.appendChild(heart);
+
+          setTimeout(() => {
+            heart.remove();
+          }, 5000);
+        }, 300);
+      }
+
+      window.onload = () => {
+        runCountdown();
+        createHearts();
+      };
     </script>
   </body>
 </html>
